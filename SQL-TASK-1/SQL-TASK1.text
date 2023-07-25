@@ -1,0 +1,219 @@
+IMDB Design a DB for IMDB 
+	1. Movie should have multiple media(Video or Image) 
+	2. Movie can belongs to multiple Genre 
+	3. Movie can have multiple reviews and Review can belongs to a user 
+	4. Artist can have multiple skills 
+	5. Artist can perform multiple role in a single film
+
+tables:
+movies - name, image, video, artist_id, review_id, genre
+
+
+ create database MovieTask;
+Query OK, 1 row affected (0.12 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| employeesdb        |
+| information_schema |
+| movietask          |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.01 sec)
+
+mysql> use movitask;
+ERROR 1049 (42000): Unknown database 'movitask'
+mysql> use MovieTask;
+Database changed
+mysql> show tables;
+Empty set (0.02 sec)
+
+mysql> CREATE TABLE MOVIES(
+    -> movieID int primary key,
+    ->   name varchar(100),
+    ->   poster text,
+    ->   trailer text,
+    ->   genre text,
+    ->   reviews_id text,
+    ->   artists_id text
+    -> );
+Query OK, 0 rows affected (0.54 sec)
+
+mysql> INSERT INTO MOVIES(movieID,name,poster,trailer,genre,reviews_id,artists_id) VALUES (0001, "Ponniyin Selvan 1",
+    -> "https://images.ottplay.com/images/ponniyin-selvan-940.jpg?impolicy=ottplay-20210210&width=600",
+    -> "https://www.youtube.com/watch?v=D4qAQYlgZQs",
+    -> "Historical, fantasy, drama, Chola Kingdom, action, musical",
+    -> "1,2,3",
+    -> "1,2,3,4,5,6,7");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO MOVIES(movieID,name,poster,trailer,genre,reviews_id,artists_id) VALUES (0002, "Ponniyin Selvan 2",
+    -> "https://static.toiimg.com/thumb/msid-99807846,width-1280,resizemode-4/99807846.jpg",
+    -> "https://www.youtube.com/watch?v=EnhS3matIoU",
+    -> "Historical, fantasy, drama, Chola Kingdom, action, musical",
+    -> "4,5,6,7",
+    -> "1,2,3,4,5,6,7");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO MOVIES(movieID,name,poster,trailer,genre,reviews_id,artists_id) VALUES (0003, "Into the Spider-Verse",
+    -> "https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_.jpg",
+    -> "https://www.youtube.com/watch?v=g4Hbz2jLxvQ",
+    -> "Animation, fantasy, Adventure, action",
+    -> "8,9,10",
+    -> "8,9,10,11");
+Query OK, 1 row affected (0.19 sec)
+
+mysql> SELECT * FROM MOVIES;
++---------+-----------------------+-----------------------------------------------------------------------------------------------+---------------------------------------------+------------------------------------------------------------+------------+---------------+
+| movieID | name                  | poster                                                                                        | trailer                                     | genre                                                      | reviews_id | artists_id    |
++---------+-----------------------+-----------------------------------------------------------------------------------------------+---------------------------------------------+------------------------------------------------------------+------------+---------------+
+|       1 | Ponniyin Selvan 1     | https://images.ottplay.com/images/ponniyin-selvan-940.jpg?impolicy=ottplay-20210210&width=600 | https://www.youtube.com/watch?v=D4qAQYlgZQs | Historical, fantasy, drama, Chola Kingdom, action, musical | 1,2,3      | 1,2,3,4,5,6,7 |
+|       2 | Ponniyin Selvan 2     | https://static.toiimg.com/thumb/msid-99807846,width-1280,resizemode-4/99807846.jpg            | https://www.youtube.com/watch?v=EnhS3matIoU | Historical, fantasy, drama, Chola Kingdom, action, musical | 4,5,6,7    | 1,2,3,4,5,6,7 |
+|       3 | Into the Spider-Verse | https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_.jpg | https://www.youtube.com/watch?v=g4Hbz2jLxvQ | Animation, fantasy, Adventure, action                      | 8,9,10     | 8,9,10,11     |
++---------+-----------------------+-----------------------------------------------------------------------------------------------+---------------------------------------------+------------------------------------------------------------+------------+---------------+
+3 rows in set (0.00 sec)
+artists - artist_id, name, movie_id, skills, role
+
+ CREATE TABLE ARTISTS (
+    ->   artistID int primary key,
+    ->   artist_name varchar(100),
+    ->   movieID text,
+    ->   skills text,
+    ->   role text
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> INSERT INTO ARTISTS(artistID,artist_name,movieID,skills,role) VALUES (0001, "Karthi", "0001,0002",
+    -> "acting, dancing, fighting, dubbing", "Vandhiya Thevan");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO ARTISTS(artistID,artist_name,movieID,skills,role) VALUES (0002, "Vikram", "0001,0002",
+    -> "acting, dancing, fighting, dubbing", "Aditha Karikalan");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO ARTISTS(artistID,artist_name,movieID,skills,role) VALUES (0003, "Jayam Ravi", "0001,0002",
+    -> "acting, dancing, fighting, dubbing", "Arunmozhivarman");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO ARTISTS(artistID,artist_name,movieID,skills,role) VALUES (0004, "Aishwarya Rai", "0001,0002",
+    -> "acting, dancing, fighting, dubbing", "Nandhini");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO ARTISTS(artistID,artist_name,movieID,skills,role) VALUES (0005, "Trisha", "0001,0002",
+    -> "acting, dancing, fighting, dubbing", "Kundavai");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO ARTISTS(artistID,artist_name,movieID,skills,role) VALUES (0006, "Aishwarya Lakshmi", "0001,0002",
+    -> "acting, dancing, fighting, dubbing", "Poonguzhali");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO ARTISTS(artistID,artist_name,movieID,skills,role) VALUES (0007, "SarathKumar", "0001,0002",
+    -> "acting, dancing, fighting, dubbing", "Periya Pazhuvettarayar");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO ARTISTS(artistID,artist_name,movieID,skills,role) VALUES (0008, "Shameikh Moore", "0003",
+    -> "acting, dancing, fighting, dubbing", "Miles Morales");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO ARTISTS(artistID,artist_name,movieID,skills,role) VALUES (0009, "Jake Johnson", "0003",
+    -> "acting, dancing, fighting, dubbing", "Peter Parker");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO ARTISTS(artistID,artist_name,movieID,skills,role) VALUES (0010, "Mahershala Ali", "0003",
+    -> "acting, dancing, fighting, dubbing", "Uncle Aaron");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO ARTISTS(artistID,artist_name,movieID,skills,role) VALUES (0011, "Hailee Steinfeld", "0003",
+    -> "acting, dancing, fighting, dubbing", "Gwen Stacey");
+Query OK, 1 row affected (0.26 sec)
+
+mysql> SELECT * FROM ARTISTS;
++----------+-------------------+-----------+------------------------------------+------------------------+
+| artistID | artist_name       | movieID   | skills                             | role                   |
++----------+-------------------+-----------+------------------------------------+------------------------+
+|        1 | Karthi            | 0001,0002 | acting, dancing, fighting, dubbing | Vandhiya Thevan        |
+|        2 | Vikram            | 0001,0002 | acting, dancing, fighting, dubbing | Aditha Karikalan       |
+|        3 | Jayam Ravi        | 0001,0002 | acting, dancing, fighting, dubbing | Arunmozhivarman        |
+|        4 | Aishwarya Rai     | 0001,0002 | acting, dancing, fighting, dubbing | Nandhini               |
+|        5 | Trisha            | 0001,0002 | acting, dancing, fighting, dubbing | Kundavai               |
+|        6 | Aishwarya Lakshmi | 0001,0002 | acting, dancing, fighting, dubbing | Poonguzhali            |
+|        7 | SarathKumar       | 0001,0002 | acting, dancing, fighting, dubbing | Periya Pazhuvettarayar |
+|        8 | Shameikh Moore    | 0003      | acting, dancing, fighting, dubbing | Miles Morales          |
+|        9 | Jake Johnson      | 0003      | acting, dancing, fighting, dubbing | Peter Parker           |
+|       10 | Mahershala Ali    | 0003      | acting, dancing, fighting, dubbing | Uncle Aaron            |
+|       11 | Hailee Steinfeld  | 0003      | acting, dancing, fighting, dubbing | Gwen Stacey            |
++----------+-------------------+-----------+------------------------------------+------------------------+
+11 rows in set (0.00 sec)
+
+reviews - review_id, reviewer_name, review, movie_id
+
+ CREATE TABLE REVIEWS (
+    ->   reviewID int primary key,
+    ->   movieID int,
+    ->   reviewer varchar(100),
+    ->   review text
+    -> );
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> INSERT INTO REVIEWS(reviewID,movieID,reviewer,review) VALUES (0001, 0001, 'Bharadwaj Rangan',
+    -> "Epic Masterpiece - beautiful performances");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO REVIEWS(reviewID,movieID,reviewer,review) VALUES (0002, 0001, 'Gopi',
+    -> "Visually stunning- world of Cholas");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO REVIEWS(reviewID,movieID,reviewer,review) VALUES (0003, 0001, 'Rick & Kevin',
+    -> "Marvelous musical");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO REVIEWS(reviewID,movieID,reviewer,review) VALUES (0004, 0002, 'Bharadwaj Rangan',
+    -> "Unforgettable- beautiful performances");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO REVIEWS(reviewID,movieID,reviewer,review) VALUES (0005, 0002, 'Gopi',
+    -> "Mani Ratnam's Magnum Opus");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO REVIEWS(reviewID,movieID,reviewer,review) VALUES (0006, 0002, 'Rick & Kevin',
+    -> "A perfect Ending");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO REVIEWS(reviewID,movieID,reviewer,review) VALUES (0007, 0002, 'Filmfare',
+    -> "Once in a lifetime performance - stellar Cast");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO REVIEWS(reviewID,movieID,reviewer,review) VALUES (0008, 0003, 'NY times',
+    -> "Striking visuals");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO REVIEWS(reviewID,movieID,reviewer,review) VALUES (0009, 0003, 'IMDB',
+    -> "mind-boggling Adventure");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO REVIEWS(reviewID,movieID,reviewer,review) VALUES (0010, 0003, 'Rotten Tomatoes',
+    -> "Fresh and fun");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM REVIEWS;
++----------+---------+------------------+-----------------------------------------------+
+| reviewID | movieID | reviewer         | review                                        |
++----------+---------+------------------+-----------------------------------------------+
+|        1 |       1 | Bharadwaj Rangan | Epic Masterpiece - beautiful performances     |
+|        2 |       1 | Gopi             | Visually stunning- world of Cholas            |
+|        3 |       1 | Rick & Kevin     | Marvelous musical                             |
+|        4 |       2 | Bharadwaj Rangan | Unforgettable- beautiful performances         |
+|        5 |       2 | Gopi             | Mani Ratnam's Magnum Opus                     |
+|        6 |       2 | Rick & Kevin     | A perfect Ending                              |
+|        7 |       2 | Filmfare         | Once in a lifetime performance - stellar Cast |
+|        8 |       3 | NY times         | Striking visuals                              |
+|        9 |       3 | IMDB             | mind-boggling Adventure                       |
+|       10 |       3 | Rotten Tomatoes  | Fresh and fun                                 |
++----------+---------+------------------+-----------------------------------------------+
+10 rows in set (0.00 sec)
